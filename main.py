@@ -18,13 +18,13 @@ from telegram import Update, InlineKeyboardMarkup, InlineKeyboardButton
 from cachetools import TTLCache
 from telegram import Chat, ChatMember, ParseMode, Update, TelegramError, User
 from functools import wraps
-from config import MONGO_URL, BOT_TOKEN, AI_API_KEY, AI_BID
+from config import MONGO_URL, BOT_TOKEN, AI_API_KEY, AI_ID
 
 BOT_TOKEN = BOT_TOKEN
 MONGO_URL = MONGO_URL
 
 AI_API_KEY = AI_API_KEY
-AI_BID = AI_BID
+AI_BID = AI_ID
 USERS_GROUP = 11
 
 
