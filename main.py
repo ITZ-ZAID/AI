@@ -18,10 +18,11 @@ from telegram import Update, InlineKeyboardMarkup, InlineKeyboardButton
 from cachetools import TTLCache
 from telegram import Chat, ChatMember, ParseMode, Update, TelegramError, User
 from functools import wraps
-from config import MONGO_URL, BOT_TOKEN, AI_API_KEY, AI_ID
+from config import BOT_ID, BOT_TOKEN, AI_API_KEY, AI_ID
 
 BOT_TOKEN = BOT_TOKEN
-MONGO_URL = MONGO_URL
+BOT_ID = BOT_ID
+
 
 AI_API_KEY = AI_API_KEY
 AI_BID = AI_ID
@@ -53,53 +54,15 @@ def log_user(update: Update, context: CallbackContext):
            return
    except Exception:
        pass
-   chatdb = MongoClient(MONGO_URL)
-   chatai = chatdb["Word"]["WordDb"]
    if not message.reply_to_message:
-       K = []  
-       is_chat = chatai.find({"chat":chat.id, "word": message.text})                 
-       for x in is_chat:
-           K.append(x['text'])
-       if K:
-           hey = random.choice(K)
-           is_text = chatai.find_one({"chat":chat.id, "text": hey})
-           Yo = is_text['check']
-       else:
            r = requests.get(f"http://api.brainshop.ai/get?bid={AI_BID}&uid={message.from_user.id}&key={AI_API_KEY}&msg={message.text}")
            hey = r.json()["cnt"]
-           Yo = None
-       if Yo == "sticker": 
            message.reply_sticker(f"{hey}")
-       if not Yo == "sticker":
-           message.reply_text(f"{hey}")
    if message.reply_to_message:                   
-       if message.reply_to_message.from_user.id == 5338777856:                    
-           K = []  
-           is_chat = chatai.find({"chat":chat.id, "word": message.text})                 
-           for x in is_chat:
-               K.append(x['text'])
-           if K:
-               hey = random.choice(K)
-               is_text = chatai.find_one({"chat":chat.id, "text": hey})
-               Yo = is_text['check']
-           else:
+       if message.reply_to_message.from_user.id == BOT_ID:                    
                r = requests.get(f"http://api.brainshop.ai/get?bid={AI_BID}&uid={message.from_user.id}&key={AI_API_KEY}&msg={message.text}")
                hey = r.json()["cnt"]
-               Yo = None
-           if Yo == "sticker":
                message.reply_sticker(f"{hey}")
-           if not Yo == "sticker":
-               message.reply_text(f"{hey}")
-       if not message.reply_to_message.from_user.id == 5338777856:          
-           if message.sticker:
-               is_chat = chatai.find_one({"chat":chat.id, "word": message.reply_to_message.text, "id": message.sticker.file_unique_id})
-               if not is_chat:
-                   chatai.insert_one({"chat":chat.id, "word": message.reply_to_message.text, "text": message.sticker.file_id, "check": "sticker", "id": message.sticker.file_unique_id})
-           if message.text:                 
-               is_chat = chatai.find_one({"chat":chat.id, "word": message.reply_to_message.text, "text": message.text})                 
-               if not is_chat:
-                   chatai.insert_one({"chat":chat.id, "word": message.reply_to_message.text, "text": message.text, "check": "none"})
-
 
 START = CommandHandler(["start", "ping"], start)
 
