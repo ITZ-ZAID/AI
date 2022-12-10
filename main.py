@@ -110,4 +110,5 @@ USER_HANDLER = MessageHandler(
 dispatcher.add_handler(USER_HANDLER, USERS_GROUP)
 dispatcher.add_handler(START)
 
+print("INFO: BOTTING YOUR CLIENT")
 updater.start_polling()
