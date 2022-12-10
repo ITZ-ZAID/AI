@@ -1,6 +1,6 @@
 from os import getenv
 
 BOT_TOKEN = getenv("BOT_TOKEN", "")
-MONGO_URL = getenv("MONGO_URL", "mongodb+srv://Ai:Ai@cluster0.7s9ymfq.mongodb.net/?retryWrites=true&w=majority")
+MONGO_URL = getenv("MONGO_URL", "")
 AI_API_KEY = getenv("AI_API_KEY", "FMxzPoLAnvaRrnn5")
 AI_ID = int(getenv("AI_ID", "170997"))
