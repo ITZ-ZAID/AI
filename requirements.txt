@@ -1,3 +1,4 @@
 requests
-pymongo
+motor
+pymongo[src]
 python-telegram-bot==13.11
