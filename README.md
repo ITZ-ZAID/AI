@@ -8,7 +8,7 @@
 
 ## VPS/Locally deploy!
 ```console
-$ apt-get -y update
+$ apt update
 $ apt-get -y install git gcc python3-dev
 $ git clone https://github.com/ITZ-ZAID/AI
 $ cd AI
