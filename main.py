@@ -18,7 +18,7 @@ from telegram import Update, InlineKeyboardMarkup, InlineKeyboardButton
 from cachetools import TTLCache
 from telegram import Chat, ChatMember, ParseMode, Update, TelegramError, User
 from functools import wraps
-from config import MONGO_URL, BOT_TOKEN, AI_API_KEY, AI_ID
+from config import MONGO_URL, BOT_TOKEN, AI_API_KEY, AI_ID, BOT_ID
 
 BOT_TOKEN = BOT_TOKEN
 MONGO_URL = MONGO_URL
@@ -73,7 +73,7 @@ def log_user(update: Update, context: CallbackContext):
        if not Yo == "sticker":
            message.reply_text(f"{hey}")
    if message.reply_to_message:                   
-       if message.reply_to_message.from_user.id == 5338777856:                    
+       if message.reply_to_message.from_user.id == BOT_ID:                    
            K = []  
            is_chat = chatai.find({"chat":chat.id, "word": message.text})                 
            for x in is_chat:
@@ -90,7 +90,7 @@ def log_user(update: Update, context: CallbackContext):
                message.reply_sticker(f"{hey}")
            if not Yo == "sticker":
                message.reply_text(f"{hey}")
-       if not message.reply_to_message.from_user.id == 5338777856:          
+       if not message.reply_to_message.from_user.id == BOT_ID:          
            if message.sticker:
                is_chat = chatai.find_one({"chat":chat.id, "word": message.reply_to_message.text, "id": message.sticker.file_unique_id})
                if not is_chat:
