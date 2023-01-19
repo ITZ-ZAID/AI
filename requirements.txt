@@ -2,4 +2,4 @@ requests
 motor
 pymongo[src]
 dnspython
-python-telegram-bot==13.11
+python-telegram-bot==20.0

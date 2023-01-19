@@ -4,21 +4,24 @@ import random
 import os
 import re
 from re import IGNORECASE, escape, search
-from telegram import TelegramError, Update
+from telegram import Update
+from telegram.error import TelegramError
 from telegram.error import BadRequest
-from telegram.ext import CallbackContext, CommandHandler, Filters, MessageHandler, CallbackQueryHandler
+from telegram.constants import ParseMode
+from telegram.ext import ContextTypes, CommandHandler, filters as Filters, MessageHandler, CallbackQueryHandler
 import telegram.ext as tg
 import re
+from telegram.ext import Application
 import asyncio
-
 from typing import Union, List, Dict, Callable, Generator, Any
 import itertools
 from collections.abc import Iterable
 from telegram import Update, InlineKeyboardMarkup, InlineKeyboardButton
-from cachetools import TTLCache
-from telegram import Chat, ChatMember, ParseMode, Update, TelegramError, User
+
+from telegram import Chat, ChatMember, Update, User
 from functools import wraps
-from config import MONGO_URL, BOT_TOKEN, AI_API_KEY, AI_ID, BOT_ID
+
+from config import MONGO_URL, BOT_TOKEN, AI_API_KEY, AI_ID
 
 BOT_TOKEN = BOT_TOKEN
 MONGO_URL = MONGO_URL
@@ -28,19 +31,21 @@ AI_BID = AI_ID
 USERS_GROUP = 11
 
 
-updater = tg.Updater(BOT_TOKEN, workers=32, use_context=True)
-dispatcher = updater.dispatcher
+application = Application.builder().token(TOKEN).build()
+asyncio.get_event_loop().run_until_complete(application.bot.initialize())
+BOT_ID = application.bot.id
 
 
-def start(update: Update, context: CallbackContext):
+
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     chat = update.effective_chat
     msg = update.effective_message
     keyb = []
-    keyb.append([InlineKeyboardButton(text="Add me ➕", url=f"http://t.me/{context.bot.username}?startgroup=true")])
-    msg.reply_text(f"Heya\nI'm {context.bot.first_name}\nI can help you to active your Chat", reply_markup=InlineKeyboardMarkup(keyb))
+    keyb.append([InlineKeyboardButton(text="ᴀᴅᴅ ᴍᴇ ᴛᴏ ʏᴏᴜʀ ɢʀᴏᴜᴘ ➕", url=f"http://t.me/{context.bot.username}?startgroup=true")])
+    await msg.reply_text(f"ʜᴇʏᴀ\nɪ'ᴍ {context.bot.first_name}\nɪ ᴄᴀɴ ʜᴇʟᴘ ʏᴏᴜ ᴛᴏ ᴀᴄᴛɪᴠᴇ ʏᴏᴜʀ ᴄʜᴀᴛ", reply_markup=InlineKeyboardMarkup(keyb))
 
 
-def log_user(update: Update, context: CallbackContext):
+async def log_user(update: Update, context: ContextTypes.DEFAULT_TYPE):
    chat = update.effective_chat
    message = update.effective_message
    try:
@@ -48,6 +53,7 @@ def log_user(update: Update, context: CallbackContext):
            message.text.startswith("!")
            or message.text.startswith("/")
            or message.text.startswith("?")
+           or message.text.startswith("@")
            or message.text.startswith("#")
        ):
            return
@@ -69,9 +75,9 @@ def log_user(update: Update, context: CallbackContext):
            hey = r.json()["cnt"]
            Yo = None
        if Yo == "sticker": 
-           message.reply_sticker(f"{hey}")
+           await message.reply_sticker(f"{hey}")
        if not Yo == "sticker":
-           message.reply_text(f"{hey}")
+           await message.reply_text(f"{hey}")
    if message.reply_to_message:                   
        if message.reply_to_message.from_user.id == BOT_ID:                    
            K = []  
@@ -87,9 +93,9 @@ def log_user(update: Update, context: CallbackContext):
                hey = r.json()["cnt"]
                Yo = None
            if Yo == "sticker":
-               message.reply_sticker(f"{hey}")
+               await message.reply_sticker(f"{hey}")
            if not Yo == "sticker":
-               message.reply_text(f"{hey}")
+               await message.reply_text(f"{hey}")
        if not message.reply_to_message.from_user.id == BOT_ID:          
            if message.sticker:
                is_chat = chatai.find_one({"chat":chat.id, "word": message.reply_to_message.text, "id": message.sticker.file_unique_id})
@@ -101,14 +107,14 @@ def log_user(update: Update, context: CallbackContext):
                    chatai.insert_one({"chat":chat.id, "word": message.reply_to_message.text, "text": message.text, "check": "none"})
 
 
-START = CommandHandler(["start", "ping"], start)
+START = CommandHandler(["start", "ping"], start, block=False)
 
 
 USER_HANDLER = MessageHandler(
-    Filters.all, log_user, run_async=True
+    Filters.ALL, log_user, block=False
 )
-dispatcher.add_handler(USER_HANDLER, USERS_GROUP)
-dispatcher.add_handler(START)
+application.add_handler(USER_HANDLER, USERS_GROUP)
+application.add_handler(START)
 
 print("INFO: BOTTING YOUR CLIENT")
-updater.start_polling()
+application.run_polling()
