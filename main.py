@@ -31,7 +31,7 @@ AI_BID = AI_ID
 USERS_GROUP = 11
 
 
-application = Application.builder().token(TOKEN).build()
+application = Application.builder().token(BOT_TOKEN).build()
 asyncio.get_event_loop().run_until_complete(application.bot.initialize())
 BOT_ID = application.bot.id
 
