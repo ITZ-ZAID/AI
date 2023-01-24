@@ -3,7 +3,7 @@
     "description": "Telegram bot for ak fucntions using api and get method, using ptb",
     "logo": "https://te.legra.ph/file/404503e13fac593ada12d.jpg",
     "keywords": [
-        "P-t-b",
+        "Python telegram bot",
         "telegram bot",
         "Telegram"
     ],
@@ -32,7 +32,7 @@
     "buildpacks": [
         {
             "url": "heroku/python"
-        },
+        }
     ],
     "formation": {
         "worker": {
