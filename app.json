@@ -1,0 +1,44 @@
+{
+    "name": "Telegram AI FrameWork",
+    "description": "Telegram bot for ak fucntions using api and get method, using ptb",
+    "logo": "https://te.legra.ph/file/404503e13fac593ada12d.jpg",
+    "keywords": [
+        "Python telegram bot",
+        "telegram bot",
+        "Telegram"
+    ],
+    "website": "https://t.me/TheSupportChat",
+    "repository": "https://github.com/ITZ-ZAID/AI",
+    "success_url": "https://t.me/TheSupportChat",
+    "env": {
+        "AI_ID": {
+            "description": "your AI_ID for api reply funcs",
+            "required": true
+        },
+        "AI_API_KEY": {
+            "description": "your AI_API_KEY for api reply funcs",
+            "required": true
+        },
+        "BOT_TOKEN": {
+            "description": "your bot token from @BotFather",
+            "required": true
+        },
+        "MONGO_URL": {
+            "description": "your mongo db url",
+            "required": true
+        }
+    },
+    "addons": [],
+    "buildpacks": [
+        {
+            "url": "heroku/python"
+        }
+    ],
+    "formation": {
+        "worker": {
+            "quantity": 1,
+            "size": "basic"
+        }
+    },
+    "stack": "container"
+    }

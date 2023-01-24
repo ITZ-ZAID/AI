@@ -14,3 +14,12 @@ $ git clone https://github.com/ITZ-ZAID/AI xd && cd xd
 $ pip3 install -U -r requirements.txt 
 $ python3 main.py
 ```
+
+### DEPLOY TO HEROKU 🚀
+
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+
+### also supports sites like koyeb
+
+
+### For Any Help Visit [👮 Support](https://t.me/TheSupportChat) 
