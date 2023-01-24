@@ -13,11 +13,11 @@
     "env": {
         "AI_ID": {
             "description": "your AI_ID for api reply funcs",
-            "required": true
+            "required": false
         },
         "AI_API_KEY": {
             "description": "your AI_API_KEY for api reply funcs",
-            "required": true
+            "required": false
         },
         "BOT_TOKEN": {
             "description": "your bot token from @BotFather",
