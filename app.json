@@ -26,7 +26,7 @@
         "MONGO_URL": {
             "description": "your mongo db url",
             "required": true
-        },
+        }
     },
     "addons": [],
     "buildpacks": [
