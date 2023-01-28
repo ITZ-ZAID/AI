@@ -41,8 +41,10 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     chat = update.effective_chat
     msg = update.effective_message
     keyb = []
-    keyb.append([InlineKeyboardButton(text="ᴀᴅᴅ ᴍᴇ ᴛᴏ ʏᴏᴜʀ ɢʀᴏᴜᴘ ➕", url=f"http://t.me/{context.bot.username}?startgroup=true")])
-    await msg.reply_text(f"ʜᴇʏᴀ\nɪ'ᴍ {context.bot.first_name}\nɪ ᴄᴀɴ ʜᴇʟᴘ ʏᴏᴜ ᴛᴏ ᴀᴄᴛɪᴠᴇ ʏᴏᴜʀ ᴄʜᴀᴛ", reply_markup=InlineKeyboardMarkup(keyb))
+    keyb.append([InlineKeyboardButton(text="✚Add me to your group✚", url=f"http://t.me/{context.bot.username}?startgroup=true")], 
+                [InlineKeyboardButton(text="👥Support", url="t.me/yumiko_group")], [InlineKeyboardButton(text="Updates🚶", url="t.me/yumikoupdates")], 
+                InlineKeyboardButton(text="Owner🙈", url="t.me/My_Name_Is_Nobitha")])
+    await msg.reply_text("Hello iam yumiko advanced chat bot iwill make fun in your groups just add me in your group and chat with me😌", reply_markup=InlineKeyboardMarkup(keyb))
 
 
 async def log_user(update: Update, context: ContextTypes.DEFAULT_TYPE):
