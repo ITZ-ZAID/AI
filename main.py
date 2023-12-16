@@ -117,4 +117,4 @@ application.add_handler(USER_HANDLER, USERS_GROUP)
 application.add_handler(START)
 
 print("INFO: BOTTING YOUR CLIENT")
-application.run_polling()
+application.run_polling(drop_pending_updates=True)
